@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfh7to23ofeu3"]
+
+[ext_resource type="SpriteFrames" uid="uid://deaqi3tr75dbq" path="res://Animations/player_anim.tres" id="1_ar043"]
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_mrv22"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v3flb"]
+radius = 7.0
+height = 28.0
+
+[node name="Player" type="CharacterBody2D"]
+texture_filter = 1
+scale = Vector2(3, 3)
+script = ExtResource("1_mrv22")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("1_ar043")
+animation = &"attack1"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.33333, 3)
+shape = SubResource("CapsuleShape2D_v3flb")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
