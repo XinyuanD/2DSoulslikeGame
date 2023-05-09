@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-enum State {IDLE, MOVE, JUMP_UP, FALL, ROLL, ATTACK1, ATTACK2, ATTACK3}
+enum State {IDLE, MOVE, JUMP_UP, FALL, ROLL, ATTACK1, ATTACK2, ATTACK3, WALL_SLIDE}
 var curstate
 
 var max_speed: float = 300.0
@@ -8,6 +8,11 @@ var acceleration: float = 30.0
 var jump_velocity: float = -400.0
 var has_double_jumped: bool = false
 var double_jump_velocity = -300.0
+
+var jump_buffer_time: int = 10 # 1/6 sec
+var jump_buffer_counter: int = 0
+var cayote_time: int = 15 # 1/4 sec
+var cayote_counter: int = 0
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var terminal_velocity: float = 500
@@ -34,6 +39,7 @@ func switch_to(new_state: State):
 		animated_sprite.play("fall")
 
 func _physics_process(delta):
+	# handle horizontal movement
 	var direction = Input.get_axis("move_left", "move_right")
 	if direction > 0:
 		velocity.x += acceleration
@@ -43,16 +49,32 @@ func _physics_process(delta):
 		velocity.x = lerp(velocity.x, 0.0, 0.6)
 	velocity.x = clamp(velocity.x, -max_speed, max_speed)
 	
+	# add gravity
 	velocity.y += gravity * delta
 	
+	# cayote time
+	if is_on_floor():
+		cayote_counter = cayote_time
+	else:
+		if cayote_counter > 0:
+			cayote_counter -= 1
+	
+	# jump buffer
+	if Input.is_action_just_pressed("jump"):
+		jump_buffer_counter = jump_buffer_time
+	if jump_buffer_counter > 0:
+		jump_buffer_counter -= 1
+	
+	# physics variables
 	var is_falling = velocity.y > 0.0 and not is_on_floor()
-	var is_jumping = Input.is_action_just_pressed("jump") and is_on_floor()
+	var is_jumping = jump_buffer_counter > 0 and cayote_counter > 0
 	var is_double_jumping = Input.is_action_just_pressed("jump") and is_falling
 	var is_jump_cancelled = Input.is_action_just_released("jump") and velocity.y < 0.0
 	var is_idling = is_on_floor() and is_zero_approx(velocity.x)
 	var is_running = is_on_floor() and not is_zero_approx(velocity.x)
 	var can_play_double_jump_anim = false
 	
+	# handles physics
 	if is_jumping:
 		velocity.y = jump_velocity
 	elif is_double_jumping and not has_double_jumped:
@@ -73,11 +95,13 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	
+	# handles sprite direction
 	if direction > 0:
 		animated_sprite.flip_h = false
 	elif direction < 0:
 		animated_sprite.flip_h = true
 	
+	# handles states
 	if is_jumping:
 		switch_to(State.JUMP_UP)
 	elif is_double_jumping and can_play_double_jump_anim:
@@ -91,9 +115,13 @@ func _physics_process(delta):
 			switch_to(State.ROLL)
 	elif is_idling:
 		switch_to(State.IDLE)
+	
+	# reset jump buffer and cayote time
+	if is_jumping:
+		jump_buffer_counter = 0
+		cayote_counter = 0
 
 
 func _on_animated_sprite_2d_animation_finished():
 	if curstate == State.JUMP_UP:
 		switch_to(State.ROLL)
-	pass

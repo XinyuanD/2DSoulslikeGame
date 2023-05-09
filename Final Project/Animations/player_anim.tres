@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=37 format=3 uid="uid://deaqi3tr75dbq"]
+[gd_resource type="SpriteFrames" load_steps=39 format=3 uid="uid://deaqi3tr75dbq"]
 
 [ext_resource type="Texture2D" uid="uid://dvfme2thcqu71" path="res://Art/adventurer-v1.5-Sheet.png" id="1_n3usf"]
 
@@ -141,6 +141,14 @@ region = Rect2(250, 37, 50, 37)
 [sub_resource type="AtlasTexture" id="AtlasTexture_d08m1"]
 atlas = ExtResource("1_n3usf")
 region = Rect2(300, 37, 50, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rhd7b"]
+atlas = ExtResource("1_n3usf")
+region = Rect2(100, 407, 50, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5dfl6"]
+atlas = ExtResource("1_n3usf")
+region = Rect2(150, 407, 50, 37)
 
 [resource]
 animations = [{
@@ -287,5 +295,16 @@ animations = [{
 }],
 "loop": true,
 "name": &"run",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rhd7b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5dfl6")
+}],
+"loop": true,
+"name": &"wall_slide",
 "speed": 5.0
 }]
