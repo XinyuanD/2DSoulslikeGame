@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2df6mh8wrba0"]
+
+[ext_resource type="Script" path="res://Scripts/skeleton.gd" id="1_p3wir"]
+[ext_resource type="SpriteFrames" uid="uid://bubcom2jbikfs" path="res://Animations/skeleton_anim.tres" id="1_wavxq"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6yuev"]
+radius = 9.0
+height = 26.0
+
+[node name="Skeleton" type="CharacterBody2D"]
+texture_filter = 1
+script = ExtResource("1_p3wir")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = ExtResource("1_wavxq")
+animation = &"attack"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, 4)
+shape = SubResource("CapsuleShape2D_6yuev")

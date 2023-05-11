@@ -24,7 +24,7 @@ var gravity: int
 
 var is_attacking: bool = false
 var is_chaining_attack: bool = false
-var chain_attack_time: int = 20
+var chain_attack_time: int = 90
 var chain_attack_counter: int = 0
 
 func _ready():
@@ -92,7 +92,7 @@ func _physics_process(delta):
 	if Input.is_action_just_released("attack"):
 		chain_attack_counter = chain_attack_time
 	if chain_attack_counter > 0:
-		chain_attack_counter -= 0
+		chain_attack_counter -= 1
 	
 	if attack_initiated and chain_attack_counter > 0:
 		is_chaining_attack = true
