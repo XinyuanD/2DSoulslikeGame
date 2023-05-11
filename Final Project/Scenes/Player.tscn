@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cfh7to23ofeu3"]
+[gd_scene load_steps=7 format=3 uid="uid://cfh7to23ofeu3"]
 
 [ext_resource type="SpriteFrames" uid="uid://deaqi3tr75dbq" path="res://Animations/player_anim.tres" id="1_ar043"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_mrv22"]
@@ -7,6 +7,15 @@
 radius = 7.0
 height = 28.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8nt6n"]
+size = Vector2(15, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1wcyk"]
+size = Vector2(23.3333, 27.6667)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5wkb1"]
+size = Vector2(44.3333, 17.6667)
+
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1
 scale = Vector2(3, 3)
@@ -14,10 +23,38 @@ script = ExtResource("1_mrv22")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_ar043")
-animation = &"wall_slide"
+animation = &"attack3"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.33333, 3)
 shape = SubResource("CapsuleShape2D_v3flb")
 
+[node name="SwordArea" type="Area2D" parent="."]
+modulate = Color(0.580392, 0.494118, 1, 0.792157)
+
+[node name="right1" type="CollisionShape2D" parent="SwordArea"]
+position = Vector2(15.8333, -1.66667)
+shape = SubResource("RectangleShape2D_8nt6n")
+
+[node name="right2" type="CollisionShape2D" parent="SwordArea"]
+position = Vector2(10, 3.16667)
+shape = SubResource("RectangleShape2D_1wcyk")
+
+[node name="right3" type="CollisionShape2D" parent="SwordArea"]
+position = Vector2(2.5, 6.5)
+shape = SubResource("RectangleShape2D_5wkb1")
+
+[node name="left1" type="CollisionShape2D" parent="SwordArea"]
+position = Vector2(-16, -2.66667)
+shape = SubResource("RectangleShape2D_8nt6n")
+
+[node name="left2" type="CollisionShape2D" parent="SwordArea"]
+position = Vector2(-10, 3)
+shape = SubResource("RectangleShape2D_1wcyk")
+
+[node name="left3" type="CollisionShape2D" parent="SwordArea"]
+position = Vector2(-2.66667, 6.66667)
+shape = SubResource("RectangleShape2D_5wkb1")
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_shape_entered" from="SwordArea" to="." method="_on_sword_area_body_shape_entered"]

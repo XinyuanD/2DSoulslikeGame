@@ -1,6 +1,9 @@
 extends CharacterBody2D
 
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 enum State {IDLE, MOVE, JUMP_UP, FALL, ROLL, ATTACK1, ATTACK2, ATTACK3, WALL_SLIDE}
+const CAN_ATTACK_STATES = [State.IDLE, State.MOVE, State.ATTACK1, State.ATTACK2, State.ATTACK3]
+const ATTACK_STATES = [State.ATTACK1, State.ATTACK2, State.ATTACK3]
 var curstate
 
 var max_speed: float = 300.0
@@ -13,12 +16,16 @@ var jump_buffer_time: int = 10 # 1/6 sec
 var jump_buffer_counter: int = 0
 var cayote_time: int = 15 # 1/4 sec
 var cayote_counter: int = 0
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var terminal_velocity: float = 500
 var normal_gravity: int = 450
 var fall_gravity: int = 980
 var gravity: int
+
+var is_attacking: bool = false
+var is_chaining_attack: bool = false
+var chain_attack_time: int = 20
+var chain_attack_counter: int = 0
 
 func _ready():
 	curstate = State.IDLE
@@ -37,6 +44,12 @@ func switch_to(new_state: State):
 		animated_sprite.play("roll")
 	elif curstate == State.FALL:
 		animated_sprite.play("fall")
+	elif curstate == State.ATTACK1:
+		animated_sprite.play("attack1")
+	elif curstate == State.ATTACK2:
+		animated_sprite.play("attack2")
+	elif curstate == State.ATTACK3:
+		animated_sprite.play("attack3")
 
 func _physics_process(delta):
 	# handle horizontal movement
@@ -65,35 +78,70 @@ func _physics_process(delta):
 	if jump_buffer_counter > 0:
 		jump_buffer_counter -= 1
 	
-	# physics variables
+	# variables
 	var is_falling = velocity.y > 0.0 and not is_on_floor()
 	var is_jumping = jump_buffer_counter > 0 and cayote_counter > 0
 	var is_double_jumping = Input.is_action_just_pressed("jump") and is_falling
 	var is_jump_cancelled = Input.is_action_just_released("jump") and velocity.y < 0.0
 	var is_idling = is_on_floor() and is_zero_approx(velocity.x)
 	var is_running = is_on_floor() and not is_zero_approx(velocity.x)
-	var can_play_double_jump_anim = false
 	
-	# handles physics
-	if is_jumping:
+	# handles attack
+	var attack_initiated = Input.is_action_just_pressed("attack")
+	is_attacking = attack_initiated or curstate in ATTACK_STATES
+	if Input.is_action_just_released("attack"):
+		chain_attack_counter = chain_attack_time
+	if chain_attack_counter > 0:
+		chain_attack_counter -= 0
+	
+	if attack_initiated and chain_attack_counter > 0:
+		is_chaining_attack = true
+		chain_attack_counter = 0
+	
+	if is_attacking and curstate in CAN_ATTACK_STATES:
+		
+		velocity.x = 0
+		direction = 0
+		
+		if curstate not in ATTACK_STATES:
+			is_chaining_attack = false
+			switch_to(State.ATTACK1)
+	
+	elif is_jumping:
+		
 		velocity.y = jump_velocity
+		switch_to(State.JUMP_UP)
+		
 	elif is_double_jumping and not has_double_jumped:
+		
 		gravity = normal_gravity
 		velocity.y = double_jump_velocity
 		has_double_jumped = true
-		can_play_double_jump_anim = true
+		switch_to(State.JUMP_UP)
+		
 	elif is_falling:
+		
 		gravity = fall_gravity
+		if velocity.y > 350.0:
+			switch_to(State.FALL)
+		else:
+			switch_to(State.ROLL)
+		
 	elif is_jump_cancelled:
-		velocity.y = 0.0
+		velocity.y *= 0.2
+		
 	elif is_idling or is_running:
+		
 		gravity = normal_gravity
 		has_double_jumped = false
+		
+		if is_running:
+			switch_to(State.MOVE)
+		elif is_idling:
+			switch_to(State.IDLE)
 	
 	if (velocity.y > terminal_velocity):
 		velocity.y = terminal_velocity
-	
-	move_and_slide()
 	
 	# handles sprite direction
 	if direction > 0:
@@ -101,20 +149,7 @@ func _physics_process(delta):
 	elif direction < 0:
 		animated_sprite.flip_h = true
 	
-	# handles states
-	if is_jumping:
-		switch_to(State.JUMP_UP)
-	elif is_double_jumping and can_play_double_jump_anim:
-		switch_to(State.JUMP_UP)
-	elif is_running:
-		switch_to(State.MOVE)
-	elif is_falling:
-		if velocity.y > 350.0:
-			switch_to(State.FALL)
-		else:
-			switch_to(State.ROLL)
-	elif is_idling:
-		switch_to(State.IDLE)
+	move_and_slide()
 	
 	# reset jump buffer and cayote time
 	if is_jumping:
@@ -125,3 +160,28 @@ func _physics_process(delta):
 func _on_animated_sprite_2d_animation_finished():
 	if curstate == State.JUMP_UP:
 		switch_to(State.ROLL)
+	elif curstate == State.ATTACK1:
+		if is_chaining_attack:
+			switch_to(State.ATTACK2)
+			is_chaining_attack = false
+		else:
+			switch_to(State.IDLE)
+	elif curstate == State.ATTACK2:
+		if is_chaining_attack:
+			switch_to(State.ATTACK3)
+			is_chaining_attack = false
+		else:
+			switch_to(State.IDLE)
+	elif curstate == State.ATTACK3:
+		if is_chaining_attack:
+			switch_to(State.ATTACK1)
+			is_chaining_attack = false
+		else:
+			switch_to(State.IDLE)
+
+
+func _on_sword_area_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+	pass # Replace with function body.
+
+
+
