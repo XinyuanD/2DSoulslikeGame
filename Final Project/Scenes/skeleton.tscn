@@ -16,9 +16,7 @@ script = ExtResource("1_p3wir")
 texture_filter = 1
 position = Vector2(-0.333333, 1.33333)
 sprite_frames = ExtResource("1_wavxq")
-animation = &"attack"
-frame = 7
-frame_progress = 0.848957
+animation = &"hit"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3, 4)
