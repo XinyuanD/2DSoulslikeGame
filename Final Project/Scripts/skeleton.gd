@@ -1,16 +1,30 @@
-extends CharacterBody2D
-
-enum State {IDLE, WALK, ATTACK, HIT, DYING, DEAD}
-var curstate = State.IDLE
-var state_time: float = 0.0
-var dir = 1
-var idle_time: float = 0
-var walk_time: float = 0
+class_name Skeleton extends CharacterBody2D
 
 @onready var animated_sprite = $AnimatedSprite2D
-var speed = 100
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+enum State {IDLE, WALK, ATTACK, HIT, DYING, DEAD}
+var curstate
+var state_time: float = 0.0
+var dir = 1
+var health: int = 4
+var attack_dmg: int = 10
+
+var idle_time: float = 0
+var walk_time: float = 0
+var walk_speed = 80
+var chase_speed = 150
+var gravity = 450
+
+var player
+var detect_distance: float = 400
+var player_detected: bool = false
+var attack_range: float = 100
+var in_attack_range: bool = false
+
+func _ready():
+	player = get_tree().get_root().find_child("Player", true, false)
+	switch_to(State.WALK)
+	idle_time = randf_range(3, 6)
+	walk_time = randf_range(5, 8)
 
 func switch_to(new_state: State):
 	curstate = new_state
@@ -30,17 +44,84 @@ func switch_to(new_state: State):
 		queue_free()
 
 func _physics_process(delta):
-	state_time += delta
 	velocity.y += gravity * delta
 	
-	if curstate == State.IDLE and state_time > idle_time:
-		switch_to(State.WALK)
-		# set idle time to random
+	var player_distance: Vector2 = player.position - position
+	if player_distance.length() < detect_distance:
+		print("player detected")
+		player_detected = true
+	else:
+		print("player NOT detected")
+		player_detected = false
 	
+	if health <= 0:
+		velocity.x = 0
+		switch_to(State.DYING)
+	elif curstate == State.HIT:
+		velocity.x = 0
+	elif player_detected:
+		# chase & attack logic
+		if player_distance.x > 0:
+			dir = 1
+		elif player_distance.x < 0:
+			dir = -1
+		
+		if abs(player_distance.x) < attack_range:
+			print("player in attack range")
+			in_attack_range = true
+		else:
+			print("player NOT in attack range")
+			in_attack_range = false
+		
+		if in_attack_range or curstate == State.ATTACK:
+			switch_to(State.ATTACK)
+			velocity.x = 0
+			# TODO: enable attack areas
+		else:
+			switch_to(State.WALK)
+			velocity.x = chase_speed * dir
+		
+	else:
+		# patrol logic
+		state_time += delta
+		if curstate == State.IDLE:
+			velocity.x = 0
+			if state_time > idle_time:
+				switch_to(State.WALK)
+				dir *= -1
+				idle_time = randf_range(3, 6)
+		elif curstate == State.WALK:
+			velocity.x = dir * walk_speed
+			if state_time > walk_time:
+				switch_to(State.IDLE)
+				walk_time = randf_range(5, 8)
+	#else:
+	#	switch_to(State.IDLE)
+	#	velocity.x = 0
 	
+	move_and_slide()
 	
-	
-	
+	if dir == 1:
+		animated_sprite.flip_h = false
+	else:
+		animated_sprite.flip_h = true
+
+func hit(damage: int):
+	if not curstate == State.HIT:
+		switch_to(State.HIT)
+		health -= damage
+
+func _on_animated_sprite_2d_animation_finished():
+	if curstate == State.ATTACK:
+		switch_to(State.IDLE)
+	elif curstate == State.HIT:
+		switch_to(State.IDLE)
+	elif curstate == State.DYING:
+		switch_to(State.DEAD)
+
+func _on_attack_area_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+	pass # Replace with function body.
+
 
 
 

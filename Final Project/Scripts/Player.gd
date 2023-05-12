@@ -1,10 +1,12 @@
 extends CharacterBody2D
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-enum State {IDLE, MOVE, JUMP_UP, FALL, ROLL, ATTACK1, ATTACK2, ATTACK3, WALL_SLIDE}
+enum State {IDLE, MOVE, JUMP_UP, FALL, ROLL, ATTACK1, ATTACK2, ATTACK3, HIT, DYING, DEAD}
 const CAN_ATTACK_STATES = [State.IDLE, State.MOVE, State.ATTACK1, State.ATTACK2, State.ATTACK3]
 const ATTACK_STATES = [State.ATTACK1, State.ATTACK2, State.ATTACK3]
 var curstate
+var health: int = 50
+var sword_dmg: int = 1
 
 var max_speed: float = 300.0
 var acceleration: float = 30.0
@@ -50,6 +52,10 @@ func switch_to(new_state: State):
 		animated_sprite.play("attack2")
 	elif curstate == State.ATTACK3:
 		animated_sprite.play("attack3")
+	elif curstate == State.DYING:
+		animated_sprite.play("die")
+	elif curstate == State.DEAD:
+		print("dead")
 
 func _physics_process(delta):
 	# handle horizontal movement
@@ -98,10 +104,17 @@ func _physics_process(delta):
 		is_chaining_attack = true
 		chain_attack_counter = 0
 	
-	if is_attacking and curstate in CAN_ATTACK_STATES:
+	
+	if health <= 0:
+		velocity.x = 0
+		switch_to(State.DYING)
+	elif curstate == State.HIT:
+		velocity.x = 0
+	elif is_attacking and curstate in CAN_ATTACK_STATES:
 		
 		velocity.x = 0
 		direction = 0
+		# TODO: enable sword areas
 		
 		if curstate not in ATTACK_STATES:
 			is_chaining_attack = false
@@ -140,6 +153,7 @@ func _physics_process(delta):
 		elif is_idling:
 			switch_to(State.IDLE)
 	
+	# clamp max fall speed
 	if (velocity.y > terminal_velocity):
 		velocity.y = terminal_velocity
 	
@@ -156,10 +170,15 @@ func _physics_process(delta):
 		jump_buffer_counter = 0
 		cayote_counter = 0
 
+func hit(damage: int):
+	if not curstate == State.HIT:
+		switch_to(State.HIT)
+		health -= damage
 
 func _on_animated_sprite_2d_animation_finished():
 	if curstate == State.JUMP_UP:
 		switch_to(State.ROLL)
+	
 	elif curstate == State.ATTACK1:
 		if is_chaining_attack:
 			switch_to(State.ATTACK2)
@@ -178,6 +197,11 @@ func _on_animated_sprite_2d_animation_finished():
 			is_chaining_attack = false
 		else:
 			switch_to(State.IDLE)
+	
+	elif curstate == State.HIT:
+		switch_to(State.IDLE)
+	elif curstate == State.DYING:
+		switch_to(State.DEAD)
 
 
 func _on_sword_area_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://c64ggt22o1br2"]
+[gd_scene load_steps=4 format=3 uid="uid://c64ggt22o1br2"]
 
 [ext_resource type="TileSet" uid="uid://cwkmuegsk6ox0" path="res://swamp_tileset.tres" id="1_ixskc"]
 [ext_resource type="PackedScene" uid="uid://cfh7to23ofeu3" path="res://Scenes/Player.tscn" id="3_abgsu"]
+[ext_resource type="PackedScene" uid="uid://c2df6mh8wrba0" path="res://Scenes/skeleton.tscn" id="3_tcsw7"]
 
 [node name="Level 1" type="Node2D"]
 
@@ -28,3 +29,6 @@ zoom = Vector2(1.3, 1.3)
 drag_horizontal_enabled = true
 drag_left_margin = 0.12
 drag_right_margin = 0.12
+
+[node name="Skeleton" parent="." instance=ExtResource("3_tcsw7")]
+position = Vector2(251, -56)
