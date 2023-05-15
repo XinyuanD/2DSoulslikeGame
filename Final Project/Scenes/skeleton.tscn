@@ -16,13 +16,17 @@ script = ExtResource("1_p3wir")
 texture_filter = 1
 position = Vector2(-0.333333, 1.33333)
 sprite_frames = ExtResource("1_wavxq")
-animation = &"hit"
+animation = &"attack"
+frame = 17
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3, 4)
 shape = SubResource("CapsuleShape2D_6yuev")
 
 [node name="AttackArea" type="Area2D" parent="."]
+visible = false
+monitoring = false
 
 [node name="right" type="CollisionPolygon2D" parent="AttackArea"]
 polygon = PackedVector2Array(9.09091, 19.0909, -9.39394, 0, -18.4848, -9.39394, -11.2121, -15.4545, 2.72727, -15.4545, 10.6061, -10.9091, 17.8788, -4.24242, 20.9091, 19.3939)

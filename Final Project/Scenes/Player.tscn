@@ -23,7 +23,9 @@ script = ExtResource("1_mrv22")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_ar043")
-animation = &"attack3"
+animation = &"hit"
+frame = 2
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.33333, 3)
@@ -31,6 +33,7 @@ shape = SubResource("CapsuleShape2D_v3flb")
 
 [node name="SwordArea" type="Area2D" parent="."]
 modulate = Color(0.580392, 0.494118, 1, 0.792157)
+monitoring = false
 
 [node name="right1" type="CollisionShape2D" parent="SwordArea"]
 position = Vector2(14.1667, -2.5)

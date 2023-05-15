@@ -1,17 +1,18 @@
 class_name Skeleton extends CharacterBody2D
 
-@onready var animated_sprite = $AnimatedSprite2D
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var attackArea: Area2D = $AttackArea
 enum State {IDLE, WALK, ATTACK, HIT, DYING, DEAD}
 var curstate
 var state_time: float = 0.0
 var dir = 1
-var health: int = 4
+var health: int = 6
 var attack_dmg: int = 10
 
 var idle_time: float = 0
 var walk_time: float = 0
-var walk_speed = 80
-var chase_speed = 150
+var walk_speed = 100
+var chase_speed = 200
 var gravity = 450
 
 var player
@@ -48,10 +49,11 @@ func _physics_process(delta):
 	
 	var player_distance: Vector2 = player.position - position
 	if player_distance.length() < detect_distance:
-		print("player detected")
+		#print("player detected")
 		player_detected = true
+		#player_detected = false # delete this after debugging!
 	else:
-		print("player NOT detected")
+		#print("player NOT detected")
 		player_detected = false
 	
 	if health <= 0:
@@ -67,16 +69,19 @@ func _physics_process(delta):
 			dir = -1
 		
 		if abs(player_distance.x) < attack_range:
-			print("player in attack range")
+			#print("player in attack range")
 			in_attack_range = true
 		else:
-			print("player NOT in attack range")
+			#print("player NOT in attack range")
 			in_attack_range = false
 		
 		if in_attack_range or curstate == State.ATTACK:
 			switch_to(State.ATTACK)
 			velocity.x = 0
-			# TODO: enable attack areas
+			
+			if animated_sprite.animation == "attack":
+				if animated_sprite.frame == 7:
+					attackArea.monitoring = true
 		else:
 			switch_to(State.WALK)
 			velocity.x = chase_speed * dir
@@ -107,12 +112,14 @@ func _physics_process(delta):
 		animated_sprite.flip_h = true
 
 func hit(damage: int):
-	if not curstate == State.HIT:
+	if curstate != State.HIT and curstate != State.DYING and curstate != State.DEAD:
 		switch_to(State.HIT)
 		health -= damage
+		print("skeleton got hit")
 
 func _on_animated_sprite_2d_animation_finished():
 	if curstate == State.ATTACK:
+		attackArea.monitoring = false
 		switch_to(State.IDLE)
 	elif curstate == State.HIT:
 		switch_to(State.IDLE)
@@ -120,7 +127,16 @@ func _on_animated_sprite_2d_animation_finished():
 		switch_to(State.DEAD)
 
 func _on_attack_area_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
-	pass # Replace with function body.
+	if curstate == State.ATTACK and body != self:
+		var struck = false
+		
+		if dir == 1 and local_shape_index == 0:
+			struck = true
+		elif dir == -1 and local_shape_index == 1:
+			struck = true
+		
+		if struck and body.name == "Player":
+			body.hit(attack_dmg)
 
 
 

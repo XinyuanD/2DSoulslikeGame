@@ -1,11 +1,13 @@
 extends CharacterBody2D
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var swordArea: Area2D = $SwordArea
 enum State {IDLE, MOVE, JUMP_UP, FALL, ROLL, ATTACK1, ATTACK2, ATTACK3, HIT, DYING, DEAD}
 const CAN_ATTACK_STATES = [State.IDLE, State.MOVE, State.ATTACK1, State.ATTACK2, State.ATTACK3]
 const ATTACK_STATES = [State.ATTACK1, State.ATTACK2, State.ATTACK3]
 var curstate
-var health: int = 50
+var max_health: int = 50
+var health: int = 30
 var sword_dmg: int = 1
 
 var max_speed: float = 300.0
@@ -32,6 +34,7 @@ var chain_attack_counter: int = 0
 func _ready():
 	curstate = State.IDLE
 	gravity = normal_gravity
+	swordArea.monitoring = false
 
 func switch_to(new_state: State):
 	curstate = new_state
@@ -52,10 +55,13 @@ func switch_to(new_state: State):
 		animated_sprite.play("attack2")
 	elif curstate == State.ATTACK3:
 		animated_sprite.play("attack3")
+	elif curstate == State.HIT:
+		animated_sprite.play("hit")
 	elif curstate == State.DYING:
 		animated_sprite.play("die")
 	elif curstate == State.DEAD:
-		print("dead")
+		# TODO: implement player respawning
+		print("player dead")
 
 func _physics_process(delta):
 	# handle horizontal movement
@@ -104,7 +110,6 @@ func _physics_process(delta):
 		is_chaining_attack = true
 		chain_attack_counter = 0
 	
-	
 	if health <= 0:
 		velocity.x = 0
 		switch_to(State.DYING)
@@ -114,11 +119,20 @@ func _physics_process(delta):
 		
 		velocity.x = 0
 		direction = 0
-		# TODO: enable sword areas
-		
 		if curstate not in ATTACK_STATES:
 			is_chaining_attack = false
 			switch_to(State.ATTACK1)
+		
+		# handles sword hitboxes
+		if animated_sprite.animation == "attack1":
+			if animated_sprite.frame >= 2:
+				swordArea.monitoring = true
+		elif animated_sprite.animation == "attack2":
+			if animated_sprite.frame >= 3:
+				swordArea.monitoring = true
+		elif animated_sprite.animation == "attack3":
+			if animated_sprite.frame >= 2:
+				swordArea.monitoring = true
 	
 	elif is_jumping:
 		
@@ -164,6 +178,7 @@ func _physics_process(delta):
 		animated_sprite.flip_h = true
 	
 	move_and_slide()
+	#print(State.find_key(curstate))
 	
 	# reset jump buffer and cayote time
 	if is_jumping:
@@ -171,41 +186,50 @@ func _physics_process(delta):
 		cayote_counter = 0
 
 func hit(damage: int):
-	if not curstate == State.HIT:
+	if curstate != State.HIT and curstate != State.DYING and curstate != State.DEAD:
 		switch_to(State.HIT)
 		health -= damage
+		print("player got hit")
 
 func _on_animated_sprite_2d_animation_finished():
 	if curstate == State.JUMP_UP:
 		switch_to(State.ROLL)
-	
-	elif curstate == State.ATTACK1:
+	elif curstate in ATTACK_STATES:
 		if is_chaining_attack:
-			switch_to(State.ATTACK2)
+			if curstate == State.ATTACK1:
+				switch_to(State.ATTACK2)
+			elif curstate == State.ATTACK2:
+				switch_to(State.ATTACK3)
+			elif curstate == State.ATTACK3:
+				switch_to(State.IDLE)
 			is_chaining_attack = false
 		else:
 			switch_to(State.IDLE)
-	elif curstate == State.ATTACK2:
-		if is_chaining_attack:
-			switch_to(State.ATTACK3)
-			is_chaining_attack = false
-		else:
-			switch_to(State.IDLE)
-	elif curstate == State.ATTACK3:
-		if is_chaining_attack:
-			switch_to(State.ATTACK1)
-			is_chaining_attack = false
-		else:
-			switch_to(State.IDLE)
-	
+		swordArea.monitoring = false
 	elif curstate == State.HIT:
 		switch_to(State.IDLE)
 	elif curstate == State.DYING:
 		switch_to(State.DEAD)
 
-
 func _on_sword_area_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
-	pass # Replace with function body.
-
-
+	if curstate in ATTACK_STATES and body != self:
+		var struck = false
+		
+		if animated_sprite.flip_h == false:
+			if curstate == State.ATTACK1 and local_shape_index == 0:
+				struck = true
+			elif curstate == State.ATTACK2 and local_shape_index == 1:
+				struck = true
+			elif curstate == State.ATTACK3 and local_shape_index == 2:
+				struck = true
+		else:
+			if curstate == State.ATTACK1 and local_shape_index == 3:
+				struck = true
+			elif curstate == State.ATTACK2 and local_shape_index == 4:
+				struck = true
+			elif curstate == State.ATTACK3 and local_shape_index == 5:
+				struck = true
+		
+		if struck and body is Skeleton:
+			body.hit(sword_dmg)
 
