@@ -10,6 +10,8 @@ height = 26.0
 [node name="Skeleton" type="CharacterBody2D"]
 texture_filter = 1
 scale = Vector2(3.3, 3.3)
+collision_layer = 2
+collision_mask = 4
 script = ExtResource("1_p3wir")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -25,7 +27,7 @@ position = Vector2(-3, 4)
 shape = SubResource("CapsuleShape2D_6yuev")
 
 [node name="AttackArea" type="Area2D" parent="."]
-visible = false
+collision_layer = 2
 monitoring = false
 
 [node name="right" type="CollisionPolygon2D" parent="AttackArea"]

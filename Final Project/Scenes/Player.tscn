@@ -19,6 +19,7 @@ size = Vector2(47, 17.8334)
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1
 scale = Vector2(3, 3)
+collision_mask = 4
 script = ExtResource("1_mrv22")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -33,6 +34,7 @@ shape = SubResource("CapsuleShape2D_v3flb")
 
 [node name="SwordArea" type="Area2D" parent="."]
 modulate = Color(0.580392, 0.494118, 1, 0.792157)
+collision_mask = 2
 monitoring = false
 
 [node name="right1" type="CollisionShape2D" parent="SwordArea"]
