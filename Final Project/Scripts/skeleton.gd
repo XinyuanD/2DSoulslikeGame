@@ -6,7 +6,7 @@ enum State {IDLE, WALK, ATTACK, HIT, DYING, DEAD}
 var curstate
 var state_time: float = 0.0
 var dir = 1
-var health: int = 6
+var health: int = 3
 var attack_dmg: int = 10
 
 var idle_time: float = 0
@@ -16,9 +16,10 @@ var chase_speed = 200
 var gravity = 450
 
 var player
+var last_position: Vector2 = Vector2.ZERO
 var detect_distance: float = 400
 var player_detected: bool = false
-var attack_range: float = 100
+var attack_range: float = 70
 var in_attack_range: bool = false
 
 func _ready():
@@ -49,9 +50,7 @@ func _physics_process(delta):
 	
 	var player_distance: Vector2 = player.position - position
 	if player_distance.length() < detect_distance:
-		#print("player detected")
 		player_detected = true
-		#player_detected = false # delete this after debugging!
 	else:
 		#print("player NOT detected")
 		player_detected = false
@@ -82,6 +81,8 @@ func _physics_process(delta):
 			if animated_sprite.animation == "attack":
 				if animated_sprite.frame == 7:
 					attackArea.monitoring = true
+				else:
+					attackArea.monitoring = false
 		else:
 			switch_to(State.WALK)
 			velocity.x = chase_speed * dir
@@ -97,13 +98,12 @@ func _physics_process(delta):
 				idle_time = randf_range(3, 6)
 		elif curstate == State.WALK:
 			velocity.x = dir * walk_speed
-			if state_time > walk_time:
+			var delta_x = abs(position.x - last_position.x)
+			if (state_time > walk_time) or (state_time > 1.0 and delta_x < 0.01):
 				switch_to(State.IDLE)
 				walk_time = randf_range(5, 8)
-	#else:
-	#	switch_to(State.IDLE)
-	#	velocity.x = 0
 	
+	last_position = position
 	move_and_slide()
 	
 	if dir == 1:
@@ -115,7 +115,6 @@ func hit(damage: int):
 	if curstate != State.HIT and curstate != State.DYING and curstate != State.DEAD:
 		switch_to(State.HIT)
 		health -= damage
-		print("skeleton got hit")
 
 func _on_animated_sprite_2d_animation_finished():
 	if curstate == State.ATTACK:
@@ -124,6 +123,7 @@ func _on_animated_sprite_2d_animation_finished():
 	elif curstate == State.HIT:
 		switch_to(State.IDLE)
 	elif curstate == State.DYING:
+		player.update_spirit(randi_range(15, 25))
 		switch_to(State.DEAD)
 
 func _on_attack_area_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):

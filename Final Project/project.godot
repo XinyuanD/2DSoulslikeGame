@@ -15,6 +15,10 @@ run/main_scene="res://Scenes/Level 1.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SceneSwitcher="*res://Scenes/scene_switcher.tscn"
+
 [input]
 
 move_right={
@@ -50,6 +54,7 @@ cast_spell={
 2d_physics/layer_1="Player"
 2d_physics/layer_2="Enemy"
 2d_physics/layer_3="Tilemap"
+2d_physics/layer_4="enemy_barrier"
 
 [physics]
 

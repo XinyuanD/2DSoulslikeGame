@@ -7,8 +7,12 @@ const CAN_ATTACK_STATES = [State.IDLE, State.MOVE, State.ATTACK1, State.ATTACK2,
 const ATTACK_STATES = [State.ATTACK1, State.ATTACK2, State.ATTACK3]
 var curstate
 var max_health: int = 50
-var health: int = 30
+var health: int
+var spirits: int = 0
 var sword_dmg: int = 1
+
+signal spirit_updated
+signal health_updated
 
 var max_speed: float = 300.0
 var acceleration: float = 30.0
@@ -35,6 +39,8 @@ func _ready():
 	curstate = State.IDLE
 	gravity = normal_gravity
 	swordArea.monitoring = false
+	health = max_health
+	spirits = 0
 
 func switch_to(new_state: State):
 	curstate = new_state
@@ -188,7 +194,7 @@ func _physics_process(delta):
 func hit(damage: int):
 	if curstate != State.HIT and curstate != State.DYING and curstate != State.DEAD:
 		switch_to(State.HIT)
-		health -= damage
+		update_health(-damage)
 		print("player got hit")
 
 func _on_animated_sprite_2d_animation_finished():
@@ -209,6 +215,7 @@ func _on_animated_sprite_2d_animation_finished():
 	elif curstate == State.HIT:
 		switch_to(State.IDLE)
 	elif curstate == State.DYING:
+		update_spirit(-spirits)
 		switch_to(State.DEAD)
 
 func _on_sword_area_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
@@ -232,4 +239,13 @@ func _on_sword_area_body_shape_entered(body_rid, body, body_shape_index, local_s
 		
 		if struck and body is Skeleton:
 			body.hit(sword_dmg)
+
+func update_health(num: int):
+	health += num
+	emit_signal("health_updated")
+
+func update_spirit(num: int):
+	spirits += num
+	emit_signal("spirit_updated")
+
 
