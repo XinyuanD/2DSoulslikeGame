@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://c64ggt22o1br2"]
+[gd_scene load_steps=6 format=3 uid="uid://c64ggt22o1br2"]
 
+[ext_resource type="Script" path="res://Scripts/Level 1.gd" id="1_3bys6"]
 [ext_resource type="TileSet" uid="uid://cwkmuegsk6ox0" path="res://swamp_tileset.tres" id="1_ixskc"]
 [ext_resource type="PackedScene" uid="uid://cfh7to23ofeu3" path="res://Scenes/Player.tscn" id="3_abgsu"]
 [ext_resource type="PackedScene" uid="uid://c2df6mh8wrba0" path="res://Scenes/skeleton.tscn" id="3_tcsw7"]
 [ext_resource type="PackedScene" uid="uid://du0iaarxl3gm8" path="res://Scenes/ui.tscn" id="4_yjibs"]
 
 [node name="Level 1" type="Node2D"]
+script = ExtResource("1_3bys6")
 
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 1
@@ -60,5 +62,20 @@ position = Vector2(-221, -1251)
 
 [node name="UI" parent="CanvasLayer" instance=ExtResource("4_yjibs")]
 
+[node name="SwitchSceneButton" type="Button" parent="CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -152.0
+offset_top = 20.0
+offset_right = -48.0
+offset_bottom = 70.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 30
+text = "Switch"
+
 [connection signal="health_updated" from="Player" to="CanvasLayer/UI" method="_on_player_health_updated"]
 [connection signal="spirit_updated" from="Player" to="CanvasLayer/UI" method="_on_player_spirit_updated"]
+[connection signal="pressed" from="CanvasLayer/UI/SwitchSceneButton" to="." method="_on_switch_scene_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/SwitchSceneButton" to="." method="_on_button_pressed"]

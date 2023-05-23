@@ -7,7 +7,7 @@ const CAN_ATTACK_STATES = [State.IDLE, State.MOVE, State.ATTACK1, State.ATTACK2,
 const ATTACK_STATES = [State.ATTACK1, State.ATTACK2, State.ATTACK3]
 var curstate
 var max_health: int = 50
-var health: int
+var health: int = 50
 var spirits: int = 0
 var sword_dmg: int = 1
 
@@ -44,8 +44,6 @@ func _ready():
 	curstate = State.IDLE
 	gravity = normal_gravity
 	swordArea.monitoring = false
-	health = max_health
-	spirits = 0
 
 func switch_to(new_state: State):
 	curstate = new_state

@@ -19,10 +19,13 @@ func goto_scene(path):
 	await $AnimationPlayer.animation_finished
 	call_deferred("_deferred_goto_scene", path)
 	$AnimationPlayer.play_backwards("fade")
+	await  $AnimationPlayer.animation_finished
+	current_scene.find_child("UI").visible = true
 
 
 func _deferred_goto_scene(path):
 	var player_health = current_scene.find_child("Player").health
+	var player_spirits = current_scene.find_child("Player").spirits
 	
 	# It is now safe to remove the current scene
 	current_scene.free()
@@ -32,9 +35,9 @@ func _deferred_goto_scene(path):
 
 	# Instance the new scene.
 	current_scene = s.instantiate()
-	
 	current_scene.find_child("Player").health = player_health
-	
+	current_scene.find_child("Player").spirits = player_spirits
+	current_scene.find_child("UI").visible = false
 	# Add it to the active scene, as child of root.
 	get_tree().root.add_child(current_scene)
 
