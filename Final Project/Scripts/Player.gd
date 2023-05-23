@@ -14,6 +14,11 @@ var sword_dmg: int = 1
 signal spirit_updated
 signal health_updated
 
+var heal_timer: float = 0.0
+var heal_time_threshold: float = 2.0
+var heal_cost: int = 30
+var heal_amount: int = 20
+
 var max_speed: float = 300.0
 var acceleration: float = 30.0
 var jump_velocity: float = -400.0
@@ -83,6 +88,11 @@ func _physics_process(delta):
 	# add gravity
 	velocity.y += gravity * delta
 	
+	if Input.is_action_pressed("heal") and health < max_health:
+		heal_timer += delta
+	elif Input.is_action_just_released("heal"):
+		heal_timer = 0
+	
 	# cayote time
 	if is_on_floor():
 		cayote_counter = cayote_time
@@ -98,11 +108,13 @@ func _physics_process(delta):
 	
 	# variables
 	var is_falling = velocity.y > 0.0 and not is_on_floor()
-	var is_jumping = jump_buffer_counter > 0 and cayote_counter > 0
+	#var is_jumping = jump_buffer_counter > 0 and cayote_counter > 0
+	var is_jumping = Input.is_action_just_pressed("jump") and cayote_counter > 0
 	var is_double_jumping = Input.is_action_just_pressed("jump") and is_falling
 	var is_jump_cancelled = Input.is_action_just_released("jump") and velocity.y < 0.0
 	var is_idling = is_on_floor() and is_zero_approx(velocity.x)
 	var is_running = is_on_floor() and not is_zero_approx(velocity.x)
+	var is_healing = Input.is_action_pressed("heal") and is_on_floor() and spirits >= heal_cost and health < max_health
 	
 	# handles attack
 	var attack_initiated = Input.is_action_just_pressed("attack")
@@ -121,6 +133,15 @@ func _physics_process(delta):
 		switch_to(State.DYING)
 	elif curstate == State.HIT:
 		velocity.x = 0
+	elif is_healing:
+		velocity.x = 0
+		direction = 0
+		switch_to(State.IDLE)
+		
+		if heal_timer > heal_time_threshold:
+			update_spirit(-heal_cost)
+			update_health(heal_amount)
+			heal_timer = 0.0
 	elif is_attacking and curstate in CAN_ATTACK_STATES:
 		
 		velocity.x = 0
@@ -242,6 +263,7 @@ func _on_sword_area_body_shape_entered(body_rid, body, body_shape_index, local_s
 
 func update_health(num: int):
 	health += num
+	health = clampi(health, 0, max_health)
 	emit_signal("health_updated")
 
 func update_spirit(num: int):
