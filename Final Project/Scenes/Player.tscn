@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cfh7to23ofeu3"]
+[gd_scene load_steps=14 format=3 uid="uid://cfh7to23ofeu3"]
 
 [ext_resource type="SpriteFrames" uid="uid://deaqi3tr75dbq" path="res://Animations/player_anim.tres" id="1_ar043"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_mrv22"]
@@ -16,6 +16,41 @@ size = Vector2(23.8333, 28)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5wkb1"]
 size = Vector2(47, 17.8334)
 
+[sub_resource type="Gradient" id="Gradient_uid31"]
+offsets = PackedFloat32Array(0, 0.814815, 0.977778)
+colors = PackedColorArray(0.513056, 0.210617, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_f6r6f"]
+gradient = SubResource("Gradient_uid31")
+
+[sub_resource type="Curve" id="Curve_71d3f"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.418182), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_nfmlj"]
+curve = SubResource("Curve_71d3f")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lxuqy"]
+particle_flag_disable_z = true
+direction = Vector3(-1, -3, 0)
+spread = 30.0
+gravity = Vector3(0, 50, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.1
+scale_max = 0.15
+scale_curve = SubResource("CurveTexture_nfmlj")
+color = Color(0.54902, 0.25098, 0, 1)
+color_ramp = SubResource("GradientTexture1D_f6r6f")
+
+[sub_resource type="Gradient" id="Gradient_ntmg6"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_x5pdw"]
+gradient = SubResource("Gradient_ntmg6")
+
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1
 scale = Vector2(3, 3)
@@ -24,15 +59,16 @@ script = ExtResource("1_mrv22")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_ar043")
-animation = &"hit"
-frame = 2
-frame_progress = 1.0
+animation = &"run"
+frame_progress = 0.821435
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(1.33333, 3)
 shape = SubResource("CapsuleShape2D_v3flb")
 
 [node name="SwordArea" type="Area2D" parent="."]
+visible = false
 modulate = Color(0.580392, 0.494118, 1, 0.792157)
 collision_mask = 2
 monitoring = false
@@ -60,6 +96,14 @@ shape = SubResource("RectangleShape2D_1wcyk")
 [node name="left3" type="CollisionShape2D" parent="SwordArea"]
 position = Vector2(-1.5, 6.58334)
 shape = SubResource("RectangleShape2D_5wkb1")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(-5, 16)
+emitting = false
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_lxuqy")
+texture = SubResource("GradientTexture2D_x5pdw")
+lifetime = 0.5
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_shape_entered" from="SwordArea" to="." method="_on_sword_area_body_shape_entered"]

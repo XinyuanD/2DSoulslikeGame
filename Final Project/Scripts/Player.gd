@@ -15,7 +15,7 @@ signal spirit_updated
 signal health_updated
 
 var heal_timer: float = 0.0
-var heal_time_threshold: float = 2.0
+var heal_time_threshold: float = 1.0
 var heal_cost: int = 30
 var heal_amount: int = 20
 
@@ -27,7 +27,7 @@ var double_jump_velocity = -300.0
 
 var jump_buffer_time: int = 10 # 1/6 sec
 var jump_buffer_counter: int = 0
-var cayote_time: int = 15 # 1/4 sec
+var cayote_time: int = 40 # 2/3 sec
 var cayote_counter: int = 0
 
 var terminal_velocity: float = 500
@@ -86,6 +86,7 @@ func _physics_process(delta):
 	# add gravity
 	velocity.y += gravity * delta
 	
+	# healing timer
 	if Input.is_action_pressed("heal") and health < max_health:
 		heal_timer += delta
 	elif Input.is_action_just_released("heal"):
@@ -99,10 +100,10 @@ func _physics_process(delta):
 			cayote_counter -= 1
 	
 	# jump buffer
-	if Input.is_action_just_pressed("jump"):
-		jump_buffer_counter = jump_buffer_time
-	if jump_buffer_counter > 0:
-		jump_buffer_counter -= 1
+	#if Input.is_action_just_pressed("jump"):
+	#	jump_buffer_counter = jump_buffer_time
+	#if jump_buffer_counter > 0:
+	#	jump_buffer_counter -= 1
 	
 	# variables
 	var is_falling = velocity.y > 0.0 and not is_on_floor()
@@ -160,6 +161,10 @@ func _physics_process(delta):
 				swordArea.monitoring = true
 	
 	elif is_jumping:
+		#if cayote_counter < cayote_time:
+		#	velocity.y = jump_velocity * 1.2
+		#else:
+		#	velocity.y = jump_velocity
 		
 		velocity.y = jump_velocity
 		switch_to(State.JUMP_UP)
