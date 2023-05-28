@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://c64ggt22o1br2"]
+[gd_scene load_steps=7 format=3 uid="uid://c64ggt22o1br2"]
 
 [ext_resource type="Script" path="res://Scripts/Level 1.gd" id="1_3bys6"]
 [ext_resource type="TileSet" uid="uid://cwkmuegsk6ox0" path="res://swamp_tileset.tres" id="1_ixskc"]
 [ext_resource type="PackedScene" uid="uid://cfh7to23ofeu3" path="res://Scenes/Player.tscn" id="3_abgsu"]
 [ext_resource type="PackedScene" uid="uid://c2df6mh8wrba0" path="res://Scenes/skeleton.tscn" id="3_tcsw7"]
 [ext_resource type="PackedScene" uid="uid://du0iaarxl3gm8" path="res://Scenes/ui.tscn" id="4_yjibs"]
+[ext_resource type="PackedScene" uid="uid://beh5w2vwhy1jk" path="res://Scenes/respawn_altar.tscn" id="6_gf407"]
 
 [node name="Level 1" type="Node2D"]
 script = ExtResource("1_3bys6")
@@ -30,6 +31,14 @@ layer_2/y_sort_enabled = false
 layer_2/y_sort_origin = 0
 layer_2/z_index = 0
 layer_2/tile_data = PackedInt32Array(-983047, 589824, 0, -1048583, 589824, 0, -1114119, 589824, 0, -1179655, 589824, 0, -2424859, 589824, 0, -2490395, 589824, 0, -2555931, 589824, 0, -2621467, 589824, 0, -2490353, 589824, 0, -2555889, 589824, 0, -2621425, 589824, 0, -2686961, 589824, 0)
+
+[node name="Checkpoints" type="Node2D" parent="."]
+
+[node name="RespawnAltar" parent="Checkpoints" instance=ExtResource("6_gf407")]
+position = Vector2(-57, -40)
+
+[node name="RespawnAltar2" parent="Checkpoints" instance=ExtResource("6_gf407")]
+position = Vector2(-1001, -360)
 
 [node name="Player" parent="." instance=ExtResource("3_abgsu")]
 position = Vector2(-362, -58)

@@ -27,6 +27,7 @@ position = Vector2(-3, 4)
 shape = SubResource("CapsuleShape2D_6yuev")
 
 [node name="AttackArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 2
 monitoring = false
 

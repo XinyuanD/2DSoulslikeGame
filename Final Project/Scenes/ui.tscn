@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://du0iaarxl3gm8"]
+[gd_scene load_steps=7 format=3 uid="uid://du0iaarxl3gm8"]
 
 [ext_resource type="Script" path="res://Scripts/ui.gd" id="1_5otyo"]
 [ext_resource type="Texture2D" uid="uid://bbhos5hoc017b" path="res://Art/UI/healthbar_fill_texture.tres" id="1_g5aqo"]
 [ext_resource type="StyleBox" uid="uid://ye4qqcrpk6uk" path="res://Art/UI/healthbar_bg_texture.tres" id="1_i23tn"]
 [ext_resource type="Texture2D" uid="uid://3i3rod28h2oo" path="res://Art/UI/spirit_icon.png" id="3_48iwn"]
+[ext_resource type="Texture2D" uid="uid://iaimgbg20fik" path="res://Art/UI/HealthBar.png" id="5_qnaej"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oraq2"]
 texture = ExtResource("1_g5aqo")
@@ -18,34 +19,44 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5otyo")
 
-[node name="HealthBar" type="ProgressBar" parent="."]
-layout_mode = 1
-offset_left = 40.0
-offset_top = 40.0
-offset_right = 440.0
-offset_bottom = 55.0
-theme_override_styles/background = ExtResource("1_i23tn")
-theme_override_styles/fill = SubResource("StyleBoxTexture_oraq2")
-value = 36.0
-show_percentage = false
-
 [node name="SpiritIcon" type="TextureRect" parent="."]
 texture_filter = 1
 layout_mode = 0
 offset_left = 40.0
-offset_top = 70.0
+offset_top = 89.0
 offset_right = 100.0
-offset_bottom = 130.0
+offset_bottom = 149.0
 texture = ExtResource("3_48iwn")
 
 [node name="SpiritCount" type="Label" parent="."]
 layout_mode = 0
 offset_left = 120.0
-offset_top = 70.0
+offset_top = 89.0
 offset_right = 220.0
-offset_bottom = 130.0
+offset_bottom = 149.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 40
 text = "30
 "
 vertical_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+layout_mode = 1
+offset_left = 103.0
+offset_top = 39.0
+offset_right = 503.0
+offset_bottom = 54.0
+theme_override_styles/background = ExtResource("1_i23tn")
+theme_override_styles/fill = SubResource("StyleBoxTexture_oraq2")
+value = 36.0
+show_percentage = false
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = -70.0
+offset_top = -8.0
+offset_right = 280.0
+offset_bottom = 122.0
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("5_qnaej")

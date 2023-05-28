@@ -54,16 +54,15 @@ gradient = SubResource("Gradient_ntmg6")
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1
 scale = Vector2(3, 3)
-collision_mask = 4
+collision_mask = 20
 script = ExtResource("1_mrv22")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_ar043")
 animation = &"run"
-frame_progress = 0.821435
+frame_progress = 0.711627
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(1.33333, 3)
 shape = SubResource("CapsuleShape2D_v3flb")
 

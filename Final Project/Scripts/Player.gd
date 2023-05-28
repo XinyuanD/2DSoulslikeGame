@@ -6,10 +6,11 @@ enum State {IDLE, MOVE, JUMP_UP, FALL, ROLL, ATTACK1, ATTACK2, ATTACK3, HIT, DYI
 const CAN_ATTACK_STATES = [State.IDLE, State.MOVE, State.ATTACK1, State.ATTACK2, State.ATTACK3]
 const ATTACK_STATES = [State.ATTACK1, State.ATTACK2, State.ATTACK3]
 var curstate
-var max_health: int = 50
-var health: int = 50
+var max_health: int = 20
+var health: int = 20
 var spirits: int = 0
 var sword_dmg: int = 1
+var last_checkpoint: Vector2
 
 signal spirit_updated
 signal health_updated
@@ -44,6 +45,7 @@ func _ready():
 	curstate = State.IDLE
 	gravity = normal_gravity
 	swordArea.monitoring = false
+	last_checkpoint = position
 
 func switch_to(new_state: State):
 	curstate = new_state
@@ -69,8 +71,11 @@ func switch_to(new_state: State):
 	elif curstate == State.DYING:
 		animated_sprite.play("die")
 	elif curstate == State.DEAD:
-		# TODO: implement player respawning
+		# TODO: implement player respawning/scene reset
 		print("player dead")
+		update_spirit(-spirits)
+		update_health(max_health)
+		position = last_checkpoint
 
 func _physics_process(delta):
 	# handle horizontal movement
@@ -219,7 +224,6 @@ func hit(damage: int):
 	if curstate != State.HIT and curstate != State.DYING and curstate != State.DEAD:
 		switch_to(State.HIT)
 		update_health(-damage)
-		print("player got hit")
 
 func _on_animated_sprite_2d_animation_finished():
 	if curstate == State.JUMP_UP:
@@ -273,4 +277,7 @@ func update_spirit(num: int):
 	spirits += num
 	emit_signal("spirit_updated")
 
-
+func update_checkpoint():
+	last_checkpoint = position
+	update_health(max_health)
+	print("new checkpoint set!")
