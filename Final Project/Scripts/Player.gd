@@ -14,6 +14,7 @@ var last_checkpoint: Vector2
 
 signal spirit_updated
 signal health_updated
+signal player_died
 
 var heal_timer: float = 0.0
 var heal_time_threshold: float = 1.0
@@ -71,11 +72,7 @@ func switch_to(new_state: State):
 	elif curstate == State.DYING:
 		animated_sprite.play("die")
 	elif curstate == State.DEAD:
-		# TODO: implement player respawning/scene reset
-		print("player dead")
-		update_spirit(-spirits)
-		update_health(max_health)
-		position = last_checkpoint
+		emit_signal("player_died")
 
 func _physics_process(delta):
 	# handle horizontal movement
@@ -132,11 +129,16 @@ func _physics_process(delta):
 		is_chaining_attack = true
 		chain_attack_counter = 0
 	
-	if health <= 0:
+	if curstate == State.DEAD:
 		velocity.x = 0
+		direction = 0
+	elif health <= 0:
+		velocity.x = 0
+		direction = 0
 		switch_to(State.DYING)
 	elif curstate == State.HIT:
 		velocity.x = 0
+		direction = 0
 	elif is_healing:
 		velocity.x = 0
 		direction = 0

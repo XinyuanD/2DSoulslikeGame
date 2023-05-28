@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/respawn_altar.gd" id="1_ue8ge"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dtjxs"]
-size = Vector2(11, 11)
+size = Vector2(9.2, 10.4667)
 
 [node name="RespawnAltar" type="Node2D"]
 scale = Vector2(1.5, 1.5)
@@ -19,6 +19,5 @@ scale = Vector2(5, 5)
 collision_layer = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-0.0999992, -0.5)
-scale = Vector2(1, 1)
+position = Vector2(0.0666666, -0.233334)
 shape = SubResource("RectangleShape2D_dtjxs")

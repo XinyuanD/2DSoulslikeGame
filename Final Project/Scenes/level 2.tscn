@@ -1,13 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://co1asikjct1pm"]
+[gd_scene load_steps=7 format=3 uid="uid://co1asikjct1pm"]
 
 [ext_resource type="TileSet" uid="uid://cwkmuegsk6ox0" path="res://swamp_tileset.tres" id="1_u04uj"]
 [ext_resource type="Script" path="res://Scripts/level 2.gd" id="1_v06lb"]
+[ext_resource type="PackedScene" uid="uid://beh5w2vwhy1jk" path="res://Scenes/respawn_altar.tscn" id="2_61p2v"]
 [ext_resource type="PackedScene" uid="uid://cfh7to23ofeu3" path="res://Scenes/Player.tscn" id="2_qr1tf"]
 [ext_resource type="PackedScene" uid="uid://du0iaarxl3gm8" path="res://Scenes/ui.tscn" id="4_0f4io"]
 [ext_resource type="PackedScene" uid="uid://c2df6mh8wrba0" path="res://Scenes/skeleton.tscn" id="4_p12rw"]
 
 [node name="Level2" type="Node2D"]
 script = ExtResource("1_v06lb")
+
+[node name="Checkpoints" type="Node2D" parent="."]
+
+[node name="RespawnAltar" parent="Checkpoints" instance=ExtResource("2_61p2v")]
+position = Vector2(-57, -40)
 
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 1
@@ -70,5 +76,6 @@ theme_override_font_sizes/font_size = 30
 text = "Switch"
 
 [connection signal="health_updated" from="Player" to="CanvasLayer/UI" method="_on_player_health_updated"]
+[connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
 [connection signal="spirit_updated" from="Player" to="CanvasLayer/UI" method="_on_player_spirit_updated"]
 [connection signal="pressed" from="CanvasLayer/UI/SwitchSceneButton" to="." method="_on_switch_scene_button_pressed"]

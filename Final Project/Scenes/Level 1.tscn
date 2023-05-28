@@ -10,6 +10,14 @@
 [node name="Level 1" type="Node2D"]
 script = ExtResource("1_3bys6")
 
+[node name="Checkpoints" type="Node2D" parent="."]
+
+[node name="RespawnAltar" parent="Checkpoints" instance=ExtResource("6_gf407")]
+position = Vector2(-57, -40)
+
+[node name="RespawnAltar2" parent="Checkpoints" instance=ExtResource("6_gf407")]
+position = Vector2(-1001, -360)
+
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 1
 tile_set = ExtResource("1_ixskc")
@@ -31,14 +39,6 @@ layer_2/y_sort_enabled = false
 layer_2/y_sort_origin = 0
 layer_2/z_index = 0
 layer_2/tile_data = PackedInt32Array(-983047, 589824, 0, -1048583, 589824, 0, -1114119, 589824, 0, -1179655, 589824, 0, -2424859, 589824, 0, -2490395, 589824, 0, -2555931, 589824, 0, -2621467, 589824, 0, -2490353, 589824, 0, -2555889, 589824, 0, -2621425, 589824, 0, -2686961, 589824, 0)
-
-[node name="Checkpoints" type="Node2D" parent="."]
-
-[node name="RespawnAltar" parent="Checkpoints" instance=ExtResource("6_gf407")]
-position = Vector2(-57, -40)
-
-[node name="RespawnAltar2" parent="Checkpoints" instance=ExtResource("6_gf407")]
-position = Vector2(-1001, -360)
 
 [node name="Player" parent="." instance=ExtResource("3_abgsu")]
 position = Vector2(-362, -58)
@@ -85,5 +85,6 @@ theme_override_font_sizes/font_size = 30
 text = "Switch"
 
 [connection signal="health_updated" from="Player" to="CanvasLayer/UI" method="_on_player_health_updated"]
+[connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
 [connection signal="spirit_updated" from="Player" to="CanvasLayer/UI" method="_on_player_spirit_updated"]
 [connection signal="pressed" from="CanvasLayer/UI/SwitchSceneButton" to="." method="_on_switch_scene_button_pressed"]
