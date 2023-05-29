@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7jhmdltlik3h"]
+
+[ext_resource type="Script" path="res://Scripts/spirit_drop.gd" id="1_lt15r"]
+[ext_resource type="Texture2D" uid="uid://3i3rod28h2oo" path="res://Art/UI/spirit_icon.png" id="1_xt10v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7v7n4"]
+size = Vector2(16, 16)
+
+[node name="SpiritDrop" type="Node2D"]
+texture_filter = 1
+scale = Vector2(2, 2)
+script = ExtResource("1_lt15r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_xt10v")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_7v7n4")
+
+[connection signal="body_shape_entered" from="Area2D" to="." method="_on_area_2d_body_shape_entered"]

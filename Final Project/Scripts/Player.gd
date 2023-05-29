@@ -15,6 +15,7 @@ var last_checkpoint: Vector2
 signal spirit_updated
 signal health_updated
 signal player_died
+signal checkpoint_reached
 
 var heal_timer: float = 0.0
 var heal_time_threshold: float = 1.0
@@ -280,6 +281,7 @@ func update_spirit(num: int):
 	emit_signal("spirit_updated")
 
 func update_checkpoint():
+	print("new checkpoint set!")
 	last_checkpoint = position
 	update_health(max_health)
-	print("new checkpoint set!")
+	emit_signal("checkpoint_reached")

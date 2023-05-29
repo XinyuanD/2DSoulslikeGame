@@ -48,16 +48,19 @@ func _deferred_goto_scene(path):
 	# Optionally, to make it compatible with the SceneTree.change_scene_to_file() API.
 	get_tree().current_scene = current_scene
 
-func reload_scene(path, last_checkpoint: Vector2):
+func reload_scene(path):
 	death_anim.play("death_screen_anim")
 	await death_anim.animation_finished
-	call_deferred("_deferred_reload_scene", path, last_checkpoint)
+	call_deferred("_deferred_reload_scene", path)
 	fade_anim.play_backwards("fade")
 	death_anim.play("RESET")
 	await  fade_anim.animation_finished
 	current_scene.find_child("UI").visible = true
 
-func _deferred_reload_scene(path, last_checkpoint: Vector2):
+func _deferred_reload_scene(path):
+	var last_checkpoint = current_scene.find_child("Player").last_checkpoint
+	var death_position = current_scene.find_child("Player").position
+	
 	current_scene.free()
 	var s = ResourceLoader.load(path)
 	current_scene = s.instantiate()
@@ -68,6 +71,21 @@ func _deferred_reload_scene(path, last_checkpoint: Vector2):
 	get_tree().root.add_child(current_scene)
 	get_tree().current_scene = current_scene
 	
+	
+	
+func reset_scene_on_checkpoint(path):
+	call_deferred("_deferred_reset_scene_on_checkpoint", path)
 
-
-
+func _deferred_reset_scene_on_checkpoint(path):
+	var player_spirits = current_scene.find_child("Player").spirits
+	var last_checkpoint = current_scene.find_child("Player").last_checkpoint
+	
+	current_scene.free()
+	var s = ResourceLoader.load(path)
+	current_scene = s.instantiate()
+	
+	current_scene.find_child("Player").spirits = player_spirits
+	current_scene.find_child("Player").position = last_checkpoint
+	
+	get_tree().root.add_child(current_scene)
+	get_tree().current_scene = current_scene
