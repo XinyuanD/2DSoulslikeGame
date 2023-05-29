@@ -6,6 +6,7 @@ var player
 func _ready():
 	UI = $CanvasLayer/UI
 	player = $Player
+	SceneSwitcher.current_scene = self
 	
 func _on_switch_scene_button_pressed():
 	UI.visible = false
