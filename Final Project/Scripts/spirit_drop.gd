@@ -5,3 +5,7 @@ func _on_area_2d_body_shape_entered(body_rid, body, body_shape_index, local_shap
 	if body.name == "Player":
 		body.update_spirit(spirit_amt)
 		queue_free()
+
+func update_spirit_amt(amt: int):
+	spirit_amt = amt
+	print("spirit amount updated!")

@@ -246,7 +246,6 @@ func _on_animated_sprite_2d_animation_finished():
 	elif curstate == State.HIT:
 		switch_to(State.IDLE)
 	elif curstate == State.DYING:
-		update_spirit(-spirits)
 		switch_to(State.DEAD)
 
 func _on_sword_area_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):

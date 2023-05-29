@@ -60,6 +60,7 @@ func reload_scene(path):
 func _deferred_reload_scene(path):
 	var last_checkpoint = current_scene.find_child("Player").last_checkpoint
 	var death_position = current_scene.find_child("Player").position
+	var player_spirits = current_scene.find_child("Player").spirits
 	
 	current_scene.free()
 	var s = ResourceLoader.load(path)
@@ -71,6 +72,13 @@ func _deferred_reload_scene(path):
 	get_tree().root.add_child(current_scene)
 	get_tree().current_scene = current_scene
 	
+	if player_spirits > 0:
+		var scene = load("res://Scenes/spirit_drop.tscn")
+		var spirit_drop = scene.instantiate()
+		spirit_drop.position = death_position
+		print(player_spirits)
+		spirit_drop.update_spirit_amt(player_spirits)
+		current_scene.add_child(spirit_drop)
 	
 	
 func reset_scene_on_checkpoint(path):
