@@ -55,6 +55,9 @@ func _physics_process(delta):
 		#print("player NOT detected")
 		player_detected = false
 	
+	if !player.can_move:
+		player_detected = false
+	
 	if health <= 0:
 		velocity.x = 0
 		switch_to(State.DYING)

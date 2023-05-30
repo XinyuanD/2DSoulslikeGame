@@ -18,6 +18,8 @@ signal health_updated
 signal player_died
 signal checkpoint_reached
 
+var can_move: bool = true
+
 var heal_timer: float = 0.0
 var heal_time_threshold: float = 1.0
 var heal_cost: int = 30
@@ -77,6 +79,9 @@ func switch_to(new_state: State):
 		emit_signal("player_died")
 
 func _physics_process(delta):
+	# add gravity
+	velocity.y += gravity * delta
+	
 	# handle horizontal movement
 	var direction = Input.get_axis("move_left", "move_right")
 	if direction > 0:
@@ -86,9 +91,6 @@ func _physics_process(delta):
 	else:
 		velocity.x = lerp(velocity.x, 0.0, 0.6)
 	velocity.x = clamp(velocity.x, -max_speed, max_speed)
-	
-	# add gravity
-	velocity.y += gravity * delta
 	
 	# healing timer
 	if Input.is_action_pressed("heal") and health < max_health:
@@ -131,16 +133,20 @@ func _physics_process(delta):
 		is_chaining_attack = true
 		chain_attack_counter = 0
 	
-	if curstate == State.DEAD:
+	if !can_move:
+		velocity.x = 0
+		direction = 0
+		switch_to(State.IDLE)
+	elif curstate == State.DEAD or curstate == State.HIT:
 		velocity.x = 0
 		direction = 0
 	elif health <= 0:
 		velocity.x = 0
 		direction = 0
 		switch_to(State.DYING)
-	elif curstate == State.HIT:
-		velocity.x = 0
-		direction = 0
+	#elif curstate == State.HIT:
+	#	velocity.x = 0
+	#	direction = 0
 	elif is_healing:
 		velocity.x = 0
 		direction = 0
@@ -170,10 +176,6 @@ func _physics_process(delta):
 				swordArea.monitoring = true
 	
 	elif is_jumping:
-		#if cayote_counter < cayote_time:
-		#	velocity.y = jump_velocity * 1.2
-		#else:
-		#	velocity.y = jump_velocity
 		
 		velocity.y = jump_velocity
 		switch_to(State.JUMP_UP)
@@ -285,3 +287,7 @@ func update_checkpoint():
 	last_checkpoint = position
 	update_health(max_health)
 	emit_signal("checkpoint_reached")
+
+
+
+

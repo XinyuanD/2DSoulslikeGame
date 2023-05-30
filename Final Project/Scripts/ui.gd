@@ -16,11 +16,11 @@ var health_levelup_count: int = 0
 var sword_dmg_levelup_count: int = 0
 var spell_dmg_levelup_count: int = 0
 
-var health_levelup_cost: int = 350
-var sword_dmg_levelup_cost: int = 300
-var spell_dmg_levelup_cost: int = 400
+var health_levelup_cost: int = 200
+var sword_dmg_levelup_cost: int = 250
+var spell_dmg_levelup_cost: int = 270
 
-var health_levelup_amt: int = 10
+var health_levelup_amt: int = 20
 var sword_dmg_levelup_amt: int = 1
 var spell_dmg_levelup_amt: int = 1
 
@@ -36,6 +36,10 @@ func _ready():
 	spell_dmg_button = $LevelUpDisplay/VBoxContainer/SpellDamageButton
 	cancel_button = $LevelUpDisplay/VBoxContainer/CancelButton
 	healthbar.max_value = player.max_health
+	
+	health_button.text = "Health +" + str(health_levelup_amt) + "\nCost: " + str(health_levelup_cost) + " spirits"
+	sword_dmg_button.text = "Sword Damage +" + str(sword_dmg_levelup_amt) + "\nCost: " + str(sword_dmg_levelup_cost) + " spirits"
+	spell_dmg_button.text = "Spell Damage +" + str(spell_dmg_levelup_amt) + "\nCost: " + str(spell_dmg_levelup_cost) + " spirits"
 	
 	stats_display.visible = true
 	levelup_display.visible = false
@@ -56,6 +60,7 @@ func _on_player_spirit_updated():
 func show_levelup_display():
 	stats_display.visible = false
 	levelup_display.visible = true
+	player.can_move = false
 	
 	if health_levelup_count < health_max_levelup_count and player.spirits >= health_levelup_cost:
 		health_button.disabled = false
@@ -66,6 +71,7 @@ func show_levelup_display():
 	cancel_button.disabled = false
 
 func _on_cancel_button_pressed():
+	player.can_move = true
 	stats_display.visible = true
 	levelup_display.visible = false
 	health_button.disabled = true
