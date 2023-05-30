@@ -14,7 +14,7 @@ func _on_switch_scene_button_pressed():
 
 func _on_player_player_died():
 	UI.visible = false
-	SceneSwitcher.reload_scene("res://Scenes/Level 2.tscn")
+	SceneSwitcher.reload_scene_on_death("res://Scenes/Level 2.tscn")
 
 
 func _on_player_checkpoint_reached():

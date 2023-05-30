@@ -1,14 +1,48 @@
-[gd_scene load_steps=7 format=3 uid="uid://du0iaarxl3gm8"]
+[gd_scene load_steps=11 format=3 uid="uid://du0iaarxl3gm8"]
 
 [ext_resource type="Script" path="res://Scripts/ui.gd" id="1_5otyo"]
 [ext_resource type="Texture2D" uid="uid://bbhos5hoc017b" path="res://Art/UI/healthbar_fill_texture.tres" id="1_g5aqo"]
 [ext_resource type="StyleBox" uid="uid://ye4qqcrpk6uk" path="res://Art/UI/healthbar_bg_texture.tres" id="1_i23tn"]
 [ext_resource type="Texture2D" uid="uid://3i3rod28h2oo" path="res://Art/UI/spirit_icon.png" id="3_48iwn"]
 [ext_resource type="Texture2D" uid="uid://iaimgbg20fik" path="res://Art/UI/HealthBar.png" id="5_qnaej"]
+[ext_resource type="FontFile" uid="uid://dmh5qsqs3ddhg" path="res://Art/UI/OptimusPrinceps.ttf" id="6_7bn44"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oraq2"]
 texture = ExtResource("1_g5aqo")
 modulate_color = Color(0.972549, 0.12549, 0.0470588, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lk80n"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.333333, 0.333333, 0.333333, 0.784314)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xfffu"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.333333, 0.333333, 0.333333, 0.588235)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_66m2o"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.333333, 0.333333, 0.333333, 0.470588)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -19,29 +53,37 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5otyo")
 
-[node name="SpiritIcon" type="TextureRect" parent="."]
+[node name="StatsDisplay" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 1
+
+[node name="SpiritIcon" type="TextureRect" parent="StatsDisplay"]
 texture_filter = 1
-layout_mode = 0
+layout_mode = 2
 offset_left = 40.0
 offset_top = 89.0
 offset_right = 100.0
 offset_bottom = 149.0
 texture = ExtResource("3_48iwn")
 
-[node name="SpiritCount" type="Label" parent="."]
-layout_mode = 0
+[node name="SpiritCount" type="Label" parent="StatsDisplay"]
+layout_mode = 2
 offset_left = 120.0
 offset_top = 89.0
 offset_right = 220.0
 offset_bottom = 149.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 40
+theme_override_fonts/font = ExtResource("6_7bn44")
+theme_override_font_sizes/font_size = 60
 text = "30
 "
 vertical_alignment = 1
 
-[node name="HealthBar" type="ProgressBar" parent="."]
-layout_mode = 1
+[node name="HealthBar" type="ProgressBar" parent="StatsDisplay"]
+layout_mode = 2
 offset_left = 103.0
 offset_top = 39.0
 offset_right = 503.0
@@ -51,9 +93,9 @@ theme_override_styles/fill = SubResource("StyleBoxTexture_oraq2")
 value = 36.0
 show_percentage = false
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="StatsDisplay"]
 texture_filter = 1
-layout_mode = 0
+layout_mode = 2
 offset_left = -70.0
 offset_top = -8.0
 offset_right = 280.0
@@ -61,10 +103,68 @@ offset_bottom = 122.0
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("5_qnaej")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
-visible = false
+[node name="LevelUpDisplay" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_right = 450.0
+offset_right = 500.0
 grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="LevelUpDisplay"]
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.392157)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LevelUpDisplay"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+
+[node name="HealthButton" type="Button" parent="LevelUpDisplay/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_7bn44")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_lk80n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xfffu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_66m2o")
+text = "Health +10
+Cost: 350 spirits"
+
+[node name="SwordDamageButton" type="Button" parent="LevelUpDisplay/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_7bn44")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_lk80n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xfffu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_66m2o")
+text = "Sword Damage +1
+Cost: 300 spirits"
+
+[node name="SpellDamageButton" type="Button" parent="LevelUpDisplay/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_7bn44")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_lk80n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xfffu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_66m2o")
+text = "Spell Damage +1
+Cost: 400 spirits"
+
+[node name="CancelButton" type="Button" parent="LevelUpDisplay/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_7bn44")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_lk80n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xfffu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_66m2o")
+text = "Cancel"
+
+[connection signal="pressed" from="LevelUpDisplay/VBoxContainer/HealthButton" to="." method="_on_health_button_pressed"]
+[connection signal="pressed" from="LevelUpDisplay/VBoxContainer/SwordDamageButton" to="." method="_on_sword_damage_button_pressed"]
+[connection signal="pressed" from="LevelUpDisplay/VBoxContainer/SpellDamageButton" to="." method="_on_spell_damage_button_pressed"]
+[connection signal="pressed" from="LevelUpDisplay/VBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
