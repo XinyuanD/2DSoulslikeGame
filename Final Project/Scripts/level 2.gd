@@ -7,7 +7,8 @@ func _ready():
 	UI = $CanvasLayer/UI
 	player = $Player
 
-func _on_switch_scene_button_pressed():
+
+func _on_scene_switch_portal_switch_scene():
 	UI.visible = false
 	SceneSwitcher.goto_scene("res://Scenes/Level 1.tscn")
 
@@ -19,3 +20,5 @@ func _on_player_player_died():
 
 func _on_player_checkpoint_reached():
 	SceneSwitcher.reset_scene_on_checkpoint("res://Scenes/Level 2.tscn")	
+
+

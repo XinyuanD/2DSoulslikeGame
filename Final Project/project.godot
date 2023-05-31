@@ -65,7 +65,7 @@ set_checkpoint={
 2d_physics/layer_2="Enemy"
 2d_physics/layer_3="Tilemap"
 2d_physics/layer_4="EnemyBarrier"
-2d_physics/layer_5="RespawnAltar"
+2d_physics/layer_5="InteractiveObjects"
 
 [physics]
 
