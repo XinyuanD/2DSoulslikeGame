@@ -6,7 +6,7 @@ enum State {IDLE, WALK, ATTACK, HIT, DYING, DEAD}
 var curstate
 var state_time: float = 0.0
 var dir = 1
-var health: int = 3
+var health: int = 6
 var attack_dmg: int = 10
 
 var idle_time: float = 0

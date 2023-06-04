@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bv24h0xaxafow"]
+
+[ext_resource type="PackedScene" uid="uid://c2df6mh8wrba0" path="res://Scenes/skeleton.tscn" id="1_x4sdq"]
+[ext_resource type="Script" path="res://Scripts/dark_skeleton.gd" id="2_a30s6"]
+
+[node name="DarkSkeleton" instance=ExtResource("1_x4sdq")]
+modulate = Color(0.305882, 0.27451, 0.537255, 1)
+script = ExtResource("2_a30s6")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(-2.12121, 3.93939)

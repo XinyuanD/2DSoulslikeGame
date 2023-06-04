@@ -17,8 +17,8 @@ var sword_dmg_levelup_count: int = 0
 var spell_dmg_levelup_count: int = 0
 
 var health_levelup_cost: int = 200
-var sword_dmg_levelup_cost: int = 250
-var spell_dmg_levelup_cost: int = 270
+var sword_dmg_levelup_cost: int = 210
+var spell_dmg_levelup_cost: int = 220
 
 var health_levelup_amt: int = 20
 var sword_dmg_levelup_amt: int = 1
@@ -86,25 +86,27 @@ func _on_health_button_pressed():
 	player.update_health(player.max_health)
 	player.update_spirit(-health_levelup_cost)
 	print("Player Health: " + str(player.health))
-	if health_levelup_count >= health_max_levelup_count or player.spirits < health_levelup_cost:
-		health_button.disabled = true
+	update_button_state()
 
 func _on_sword_damage_button_pressed():
 	sword_dmg_levelup_count += 1
 	player.sword_dmg += sword_dmg_levelup_amt
 	player.update_spirit(-sword_dmg_levelup_cost)
 	print("Player Sword Dmg: " + str(player.sword_dmg))
-	if sword_dmg_levelup_count >= weapon_dmg_max_levelup_count or player.spirits < sword_dmg_levelup_cost:
-		sword_dmg_button.disabled = true
+	update_button_state()
 
 func _on_spell_damage_button_pressed():
 	spell_dmg_levelup_count += 1
 	player.spell_dmg += spell_dmg_levelup_amt
 	player.update_spirit(-spell_dmg_levelup_cost)
 	print("Player Spell Dmg: " + str(player.spell_dmg))
+	update_button_state()
+
+func update_button_state():
+	if health_levelup_count >= health_max_levelup_count or player.spirits < health_levelup_cost:
+		health_button.disabled = true
+	if sword_dmg_levelup_count >= weapon_dmg_max_levelup_count or player.spirits < sword_dmg_levelup_cost:
+		sword_dmg_button.disabled = true
 	if spell_dmg_levelup_count >= weapon_dmg_max_levelup_count or player.spirits < spell_dmg_levelup_cost:
 		spell_dmg_button.disabled = true
-
-
-
 
