@@ -46,6 +46,8 @@ var is_chaining_attack: bool = false
 var chain_attack_time: int = 90
 var chain_attack_counter: int = 0
 
+var enemy_knockback_force: int = 50
+
 func _ready():
 	curstate = State.IDLE
 	gravity = normal_gravity
@@ -272,6 +274,7 @@ func _on_sword_area_body_shape_entered(body_rid, body, body_shape_index, local_s
 		
 		if struck and body is Skeleton:
 			body.hit(sword_dmg)
+
 
 func update_health(num: int):
 	health += num

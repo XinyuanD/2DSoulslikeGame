@@ -10,6 +10,9 @@ func _ready():
 	fade_anim = $FadeAnimationPlayer
 	death_anim = $DeathAnimationPlayer
 
+# citation
+# https://docs.godotengine.org/en/stable/tutorials/scripting/singletons_autoload.html#custom-scene-switcher
+
 func goto_scene(path):
 	# This function will usually be called from a signal callback,
 	# or some other function in the current scene.

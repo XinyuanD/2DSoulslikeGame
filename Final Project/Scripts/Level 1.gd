@@ -8,7 +8,6 @@ func _ready():
 	player = $Player
 	SceneSwitcher.current_scene = self
 
-
 func _on_scene_switch_portal_switch_scene():
 	UI.visible = false
 	SceneSwitcher.goto_scene("res://Scenes/level 2.tscn")

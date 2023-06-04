@@ -118,6 +118,8 @@ func hit(damage: int):
 	if curstate != State.HIT and curstate != State.DYING and curstate != State.DEAD:
 		switch_to(State.HIT)
 		health -= damage
+		var knockbackdir: Vector2 = (self.position - player.position).normalized()
+		move_and_collide(knockbackdir * player.enemy_knockback_force)
 
 func _on_animated_sprite_2d_animation_finished():
 	if curstate == State.ATTACK:
