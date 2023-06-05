@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://dax0u0wd36ksr"]
+
+[ext_resource type="PackedScene" uid="uid://c2df6mh8wrba0" path="res://Scenes/skeleton.tscn" id="1_whhdh"]
+[ext_resource type="Script" path="res://Scripts/boss_skeleton.gd" id="2_rqn2s"]
+
+[node name="boss_skeleton" instance=ExtResource("1_whhdh")]
+modulate = Color(0.67451, 0.196078, 0.184314, 1)
+scale = Vector2(20, 20)
+script = ExtResource("2_rqn2s")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+position = Vector2(-0.65, 2.05)
+animation = &"idle"
+frame = 0
+frame_progress = 0.0
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(-1.55, 8.5)
+
+[node name="right" parent="AttackArea" index="0"]
+polygon = PackedVector2Array(12.9, 17.1, 13.75, 8.2, 23.75, 8.3, 24.2, 17.1)
+
+[node name="left" parent="AttackArea" index="1"]
+polygon = PackedVector2Array(13.4, 17.15, 15.45, 9, 24.2, 9, 25.4, 17.15)

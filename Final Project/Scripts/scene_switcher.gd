@@ -3,12 +3,14 @@ extends CanvasLayer
 var current_scene = null
 var fade_anim
 var death_anim
+var finish_game_anim
 
 func _ready():
 	var root = get_tree().root
 	current_scene = root.get_child(root.get_child_count() - 1)
 	fade_anim = $FadeAnimationPlayer
 	death_anim = $DeathAnimationPlayer
+	finish_game_anim = $FinishGameAnimationPlayer
 
 # citation
 # https://docs.godotengine.org/en/stable/tutorials/scripting/singletons_autoload.html#custom-scene-switcher
@@ -29,6 +31,9 @@ func goto_scene(path):
 	await  fade_anim.animation_finished
 	current_scene.find_child("UI").visible = true
 
+func finish_game():
+	finish_game_anim.play("finish_game_anim")
+	await finish_game_anim.animation_finished
 
 func _deferred_goto_scene(path):
 	var old_player = current_scene.find_child("Player")

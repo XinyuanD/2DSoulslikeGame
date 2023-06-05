@@ -1,4 +1,4 @@
-extends Node2D
+class_name Altar extends Node2D
 @onready var area: Area2D = $Area2D
 
 func _process(delta):

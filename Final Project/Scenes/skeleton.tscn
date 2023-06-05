@@ -4,8 +4,8 @@
 [ext_resource type="SpriteFrames" uid="uid://bubcom2jbikfs" path="res://Animations/skeleton_anim.tres" id="1_wavxq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6yuev"]
-radius = 9.0
-height = 26.0
+radius = 5.75
+height = 19.0
 
 [node name="Skeleton" type="CharacterBody2D"]
 texture_filter = 1

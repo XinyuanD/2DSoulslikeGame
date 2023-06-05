@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b76avdlnmdejk"]
+[gd_scene load_steps=12 format=3 uid="uid://b76avdlnmdejk"]
 
 [ext_resource type="Script" path="res://Scripts/scene_switcher.gd" id="1_jjit3"]
 [ext_resource type="FontFile" uid="uid://dmh5qsqs3ddhg" path="res://Art/UI/OptimusPrinceps.ttf" id="2_cw8a3"]
@@ -37,6 +37,67 @@ tracks/0/keys = {
 _data = {
 "RESET": SubResource("Animation_fwo34"),
 "fade": SubResource("Animation_ixn0l")
+}
+
+[sub_resource type="Animation" id="Animation_dp1uo"]
+resource_name = "finish_game_anim"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FinishGame:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FinishGame/Label2:theme_override_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_agoln"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FinishGame:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FinishGame/Label2:theme_override_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ttkep"]
+_data = {
+"RESET": SubResource("Animation_agoln"),
+"finish_game_anim": SubResource("Animation_dp1uo")
 }
 
 [sub_resource type="Animation" id="Animation_sag1w"]
@@ -115,6 +176,40 @@ color = Color(1, 1, 1, 0)
 [node name="FadeAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_6pad8")
+}
+
+[node name="FinishGame" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="Label2" type="Label" parent="FinishGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -266.0
+offset_top = -49.0
+offset_right = 268.0
+offset_bottom = 71.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0)
+theme_override_fonts/font = ExtResource("2_cw8a3")
+theme_override_font_sizes/font_size = 140
+text = "Thank you"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FinishGameAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ttkep")
 }
 
 [node name="DeathBanner" type="ColorRect" parent="."]
