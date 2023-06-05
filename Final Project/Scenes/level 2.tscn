@@ -67,94 +67,94 @@ editor_draw_limits = true
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="DarkSkeleton" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(1715, -61)
+position = Vector2(1715, -67)
 
 [node name="DarkSkeleton2" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(1999, -348)
+position = Vector2(1999, -67)
 
 [node name="DarkSkeleton3" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(3061, -57)
+position = Vector2(3061, -67)
 
 [node name="DarkSkeleton4" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(3055, -219)
+position = Vector2(3055, -67)
 
 [node name="DarkSkeleton5" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(3852, -64)
+position = Vector2(3852, -67)
 
 [node name="DarkSkeleton6" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(4451, -64)
+position = Vector2(4451, -67)
 
 [node name="DarkSkeleton7" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(4884, -60)
+position = Vector2(4884, -67)
 
 [node name="DarkSkeleton8" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(5940, -478)
+position = Vector2(5940, -67)
 
 [node name="DarkSkeleton9" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(5646, -60)
+position = Vector2(5646, -67)
 
 [node name="DarkSkeleton10" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(6770, -62)
+position = Vector2(6770, -67)
 
 [node name="DarkSkeleton11" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(7022, -61)
+position = Vector2(7022, -67)
 
 [node name="DarkSkeleton12" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(7336, -65)
+position = Vector2(7336, -67)
 
 [node name="DarkSkeleton17" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(7690, -63)
+position = Vector2(7690, -67)
 
 [node name="DarkSkeleton13" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(8448, -60)
+position = Vector2(8448, -67)
 
 [node name="DarkSkeleton14" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(8857, -59)
+position = Vector2(8857, -67)
 
 [node name="DarkSkeleton15" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(9241, -60)
+position = Vector2(9241, -67)
 
 [node name="DarkSkeleton16" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(8056, -59)
+position = Vector2(8056, -67)
 
 [node name="Skeleton" parent="Enemies" instance=ExtResource("4_p12rw")]
-position = Vector2(7140, -319)
+position = Vector2(7153, -322)
 
 [node name="Skeleton2" parent="Enemies" instance=ExtResource("4_p12rw")]
-position = Vector2(7311, -319)
+position = Vector2(7324, -322)
 
 [node name="Skeleton3" parent="Enemies" instance=ExtResource("4_p12rw")]
-position = Vector2(7457, -317)
+position = Vector2(7470, -322)
 
 [node name="Skeleton4" parent="Enemies" instance=ExtResource("4_p12rw")]
-position = Vector2(7593, -325)
+position = Vector2(7606, -322)
 
 [node name="Skeleton5" parent="Enemies" instance=ExtResource("4_p12rw")]
-position = Vector2(7739, -318)
+position = Vector2(7752, -322)
 
 [node name="Skeleton6" parent="Enemies" instance=ExtResource("4_p12rw")]
-position = Vector2(7900, -317)
+position = Vector2(7913, -322)
 
 [node name="Skeleton7" parent="Enemies" instance=ExtResource("4_p12rw")]
-position = Vector2(8064, -320)
+position = Vector2(8077, -322)
 
 [node name="Skeleton8" parent="Enemies" instance=ExtResource("4_p12rw")]
-position = Vector2(8230, -321)
+position = Vector2(8243, -322)
 
 [node name="Skeleton9" parent="Enemies" instance=ExtResource("4_p12rw")]
-position = Vector2(8417, -318)
+position = Vector2(8430, -322)
 
 [node name="Skeleton10" parent="Enemies" instance=ExtResource("4_p12rw")]
-position = Vector2(8629, -318)
+position = Vector2(8642, -322)
 
 [node name="Skeleton11" parent="Enemies" instance=ExtResource("4_p12rw")]
-position = Vector2(8812, -318)
+position = Vector2(8825, -322)
 
 [node name="Skeleton12" parent="Enemies" instance=ExtResource("4_p12rw")]
-position = Vector2(9004, -318)
+position = Vector2(9017, -322)
 
 [node name="Skeleton13" parent="Enemies" instance=ExtResource("4_p12rw")]
-position = Vector2(9191, -321)
+position = Vector2(9204, -322)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

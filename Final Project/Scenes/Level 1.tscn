@@ -67,94 +67,94 @@ editor_draw_limits = true
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Skeleton" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(2049, -410)
+position = Vector2(2052, -422)
 
 [node name="Skeleton2" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(1950, -60)
+position = Vector2(1950, -68)
 
 [node name="Skeleton3" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(2416, -61)
+position = Vector2(2416, -68)
 
 [node name="Skeleton4" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(3854, -410)
+position = Vector2(3854, -68)
 
 [node name="Skeleton5" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(4186, -409)
+position = Vector2(4186, -68)
 
 [node name="Skeleton6" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(4670, -61)
+position = Vector2(4670, -68)
 
 [node name="Skeleton7" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(4520, -59)
+position = Vector2(4520, -68)
 
 [node name="Skeleton8" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(4361, -59)
+position = Vector2(4361, -68)
 
 [node name="Skeleton9" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(4185, -61)
+position = Vector2(4185, -68)
 
 [node name="Skeleton10" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(4009, -61)
+position = Vector2(4009, -68)
 
 [node name="Skeleton11" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(3089, -61)
+position = Vector2(3089, -68)
 
 [node name="Skeleton12" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(4935, -61)
+position = Vector2(4935, -68)
 
 [node name="Skeleton13" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(5034, -64)
+position = Vector2(5034, -68)
 
 [node name="Skeleton14" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(5137, -63)
+position = Vector2(5137, -68)
 
 [node name="Skeleton15" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(5253, -63)
+position = Vector2(5253, -68)
 
 [node name="Skeleton16" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(5370, -64)
+position = Vector2(5370, -68)
 
 [node name="Skeleton17" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(5499, -64)
+position = Vector2(5499, -68)
 
 [node name="Skeleton18" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(5608, -65)
+position = Vector2(5608, -68)
 
 [node name="Skeleton19" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(5723, -65)
+position = Vector2(5723, -68)
 
 [node name="Skeleton20" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(5840, -65)
+position = Vector2(5840, -68)
 
 [node name="Skeleton21" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(5964, -65)
+position = Vector2(5964, -68)
 
 [node name="Skeleton22" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(6088, -64)
+position = Vector2(6088, -68)
 
 [node name="Skeleton23" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(7056, -62)
+position = Vector2(7056, -68)
 
 [node name="Skeleton24" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(7356, -62)
+position = Vector2(7356, -68)
 
 [node name="Skeleton25" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(7656, -62)
+position = Vector2(7529, -69)
 
 [node name="Skeleton26" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(7169, -221)
+position = Vector2(7169, -68)
 
 [node name="Skeleton27" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(7692, -221)
+position = Vector2(7706, -67)
 
 [node name="Skeleton28" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(8355, -61)
+position = Vector2(8355, -68)
 
 [node name="Skeleton29" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(9261, -444)
+position = Vector2(9261, -68)
 
 [node name="Skeleton30" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(9120, -59)
+position = Vector2(9120, -68)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

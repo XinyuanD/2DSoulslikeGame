@@ -20,7 +20,9 @@ func _on_player_checkpoint_reached():
 
 func _on_boss_skeleton_is_dead():
 	barrier.disabled = true
-
+	UI.visible = false
+	SceneSwitcher.play_boss_kill_animation()
+	UI.visible = true
 
 func _on_scene_switch_portal_switch_scene():
 	UI.visible = false

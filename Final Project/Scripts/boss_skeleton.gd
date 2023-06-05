@@ -5,7 +5,7 @@ signal is_dead
 func _ready():
 	player = get_tree().get_root().find_child("Player", true, false)
 	switch_to(State.WALK)
-	health = 2
+	health = 50
 	attack_dmg = 25
 	detect_distance = 1500
 	attack_range = 500

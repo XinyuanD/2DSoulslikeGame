@@ -8,7 +8,7 @@ const ATTACK_STATES = [State.ATTACK1, State.ATTACK2, State.ATTACK3]
 var curstate
 var max_health: int = 30
 var health: int = 30
-var spirits: int = 2000
+var spirits: int = 0
 var sword_dmg: int = 1
 var spell_dmg: int = 2
 var last_checkpoint: Vector2

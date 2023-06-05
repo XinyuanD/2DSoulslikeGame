@@ -4,8 +4,8 @@
 [ext_resource type="SpriteFrames" uid="uid://bubcom2jbikfs" path="res://Animations/skeleton_anim.tres" id="1_wavxq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6yuev"]
-radius = 5.75
-height = 19.0
+radius = 6.66667
+height = 24.8485
 
 [node name="Skeleton" type="CharacterBody2D"]
 texture_filter = 1
@@ -16,14 +16,12 @@ script = ExtResource("1_p3wir")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(-0.333333, 1.33333)
+position = Vector2(-3.93939, 3.33333)
 sprite_frames = ExtResource("1_wavxq")
-animation = &"attack"
-frame = 17
-frame_progress = 1.0
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, 4)
+position = Vector2(-3.63636, 6.66667)
 shape = SubResource("CapsuleShape2D_6yuev")
 
 [node name="AttackArea" type="Area2D" parent="."]
@@ -35,6 +33,7 @@ monitoring = false
 polygon = PackedVector2Array(9.09091, 19.0909, -9.39394, 0, -18.4848, -9.39394, -11.2121, -15.4545, 2.72727, -15.4545, 10.6061, -10.9091, 17.8788, -4.24242, 20.9091, 19.3939)
 
 [node name="left" type="CollisionPolygon2D" parent="AttackArea"]
+position = Vector2(-7.87879, 0)
 scale = Vector2(-1, 1)
 polygon = PackedVector2Array(9.09091, 19.0909, -9.39394, 0, -18.1818, -9.09091, -10.6061, -15.4545, 3.33333, -15.4545, 12.1212, -10.9091, 18.4848, -3.33333, 21.2121, 19.3939)
 

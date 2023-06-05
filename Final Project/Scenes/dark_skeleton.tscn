@@ -8,4 +8,4 @@ modulate = Color(0.305882, 0.27451, 0.537255, 1)
 script = ExtResource("2_a30s6")
 
 [node name="CollisionShape2D" parent="." index="1"]
-position = Vector2(-2.12121, 3.93939)
+position = Vector2(-4.24242, 6.66667)
