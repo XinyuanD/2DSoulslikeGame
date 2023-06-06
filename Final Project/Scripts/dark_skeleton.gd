@@ -3,8 +3,7 @@ extends Skeleton
 func _ready():
 	player = get_tree().get_root().find_child("Player", true, false)
 	switch_to(State.WALK)
-	health = 10
-	attack_dmg = 15
+	health = 8
 	detect_distance = 500
 	idle_time = randf_range(3, 6)
 	walk_time = randf_range(5, 8)

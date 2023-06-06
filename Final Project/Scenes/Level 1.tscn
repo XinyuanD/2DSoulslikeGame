@@ -76,7 +76,7 @@ position = Vector2(1950, -68)
 position = Vector2(2416, -68)
 
 [node name="Skeleton4" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(3854, -68)
+position = Vector2(3925, -419)
 
 [node name="Skeleton5" parent="Enemies" instance=ExtResource("3_tcsw7")]
 position = Vector2(4186, -68)
@@ -94,7 +94,7 @@ position = Vector2(4361, -68)
 position = Vector2(4185, -68)
 
 [node name="Skeleton10" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(4009, -68)
+position = Vector2(4149, -422)
 
 [node name="Skeleton11" parent="Enemies" instance=ExtResource("3_tcsw7")]
 position = Vector2(3089, -68)
@@ -139,10 +139,10 @@ position = Vector2(7056, -68)
 position = Vector2(7356, -68)
 
 [node name="Skeleton25" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(7529, -69)
+position = Vector2(7554, -228)
 
 [node name="Skeleton26" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(7169, -68)
+position = Vector2(7201, -227)
 
 [node name="Skeleton27" parent="Enemies" instance=ExtResource("3_tcsw7")]
 position = Vector2(7706, -67)
@@ -151,7 +151,7 @@ position = Vector2(7706, -67)
 position = Vector2(8355, -68)
 
 [node name="Skeleton29" parent="Enemies" instance=ExtResource("3_tcsw7")]
-position = Vector2(9261, -68)
+position = Vector2(9405, -452)
 
 [node name="Skeleton30" parent="Enemies" instance=ExtResource("3_tcsw7")]
 position = Vector2(9120, -68)

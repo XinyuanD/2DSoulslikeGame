@@ -10,7 +10,7 @@ func _ready():
 
 func _on_scene_switch_portal_switch_scene():
 	UI.visible = false
-	SceneSwitcher.goto_scene("res://Scenes/Level 1.tscn")
+	SceneSwitcher.goto_scene("res://Scenes/level_3.tscn")
 
 
 func _on_player_player_died():

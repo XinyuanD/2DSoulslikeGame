@@ -6,8 +6,8 @@ enum State {IDLE, MOVE, JUMP_UP, FALL, ROLL, ATTACK1, ATTACK2, ATTACK3, HIT, DYI
 const CAN_ATTACK_STATES = [State.IDLE, State.MOVE, State.ATTACK1, State.ATTACK2, State.ATTACK3]
 const ATTACK_STATES = [State.ATTACK1, State.ATTACK2, State.ATTACK3]
 var curstate
-var max_health: int = 30
-var health: int = 30
+var max_health: int = 40
+var health: int = 40
 var spirits: int = 0
 var sword_dmg: int = 1
 var spell_dmg: int = 2

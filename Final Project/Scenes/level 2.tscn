@@ -41,7 +41,7 @@ layer_1/z_index = 0
 layer_1/tile_data = PackedInt32Array()
 layer_2/name = "Barrier"
 layer_2/enabled = true
-layer_2/modulate = Color(1, 1, 1, 1)
+layer_2/modulate = Color(1, 1, 1, 0)
 layer_2/y_sort_enabled = false
 layer_2/y_sort_origin = 0
 layer_2/z_index = 0
@@ -69,6 +69,9 @@ editor_draw_limits = true
 [node name="DarkSkeleton" parent="Enemies" instance=ExtResource("5_pj8q7")]
 position = Vector2(1715, -67)
 
+[node name="DarkSkeleton18" parent="Enemies" instance=ExtResource("5_pj8q7")]
+position = Vector2(1899, -354)
+
 [node name="DarkSkeleton2" parent="Enemies" instance=ExtResource("5_pj8q7")]
 position = Vector2(1999, -67)
 
@@ -91,7 +94,7 @@ position = Vector2(4884, -67)
 position = Vector2(5940, -67)
 
 [node name="DarkSkeleton9" parent="Enemies" instance=ExtResource("5_pj8q7")]
-position = Vector2(5646, -67)
+position = Vector2(5938, -486)
 
 [node name="DarkSkeleton10" parent="Enemies" instance=ExtResource("5_pj8q7")]
 position = Vector2(6770, -67)
